@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block email_content %}
+<p>Welcome! We're excited to have you on board. To get started, please activate your account by clicking the button below.</p>
+<div class="button-container">
+    <a href="{{ body.url }}" class="button">Activate Account</a>
+</div>
+<p>This link will expire in 24 hours.</p>
+{% endblock %}

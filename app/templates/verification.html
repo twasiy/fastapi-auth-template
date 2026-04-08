@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block email_content %}
+<p>Please verify your email address to ensure your account remains secure and to access all features.</p>
+<div class="button-container">
+    <a href="{{ body.url }}" class="button">Verify Email</a>
+</div>
+<p>If you didn't request this, you can safely ignore this email.</p>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block email_content %}
+<p>You recently requested to change the email address associated with your account. Please click the button below to confirm this change.</p>
+<div class="button-container">
+    <a href="{{ body.url }}" class="button">Confirm New Email</a>
+</div>
+<p>Once confirmed, your old email address will no longer be able to log in.</p>
+{% endblock %}

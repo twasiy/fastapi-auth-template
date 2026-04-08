@@ -1,0 +1,63 @@
+# --- Python Specific ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# --- FastAPI/Python Build & Distribution ---
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Environment Variables (CRITICAL) ---
+.env
+.env.local
+.env.*.local
+
+# --- Database & Logs ---
+*.db
+*.sqlite3
+*.log
+logs/
+*.sqlite
+
+# --- IDE/Editor Specific ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Testing & Coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Miscellaneous ---
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.fastapicloudignore
