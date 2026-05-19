@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     )
 
     TITLE: str = "FastAPI Auth Template"
-    API_V1_STR: str = "/api/v1"
+    API_STR: str = "/api"
     CORS_ORIGINS: List[str]
 
     SECRET_KEY: SecretStr

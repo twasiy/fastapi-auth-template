@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 from typing import Dict
-from app.api.v1.dependencies import AsyncDB, RedisConn
+from app.api.dependencies import AsyncDB, RedisConn
 from sqlalchemy import text
 
 router = APIRouter()
