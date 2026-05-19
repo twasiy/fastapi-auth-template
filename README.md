@@ -119,7 +119,7 @@ Create a `.env` file in the root directory:
 ```.env.example
 # Project configuration
 TITLE=your-title-for-the-docs
-API_V1_STR=/api/v1
+API_STR=/api
 FRONTEND_HOST=your-frontend-base-url
 PROJECT_NAME=your-project-name
 
@@ -194,13 +194,13 @@ uvicorn app.main:app --reload
 
 ## ✅ Verification
 Once the server is running, you can access the interactive API documentation at:
-* **Swagger UI:** `http://127.0.0.1:8000/docs/v1`
-* **ReDoc:** `http://127.0.0.1:8000/redoc/v1`
+* **Swagger UI:** `http://127.0.0.1:8000/docs`
+* **ReDoc:** `http://127.0.0.1:8000/redoc`
 
 ### 7. Running Tests
 To ensure everything is configured correctly, run the test suite:
 ```bash
-pytest
+pytest -v
 ```
 
 ---
