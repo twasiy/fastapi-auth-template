@@ -42,9 +42,8 @@ A robust, production-ready FastAPI boilerplate featuring a comprehensive authent
 ```
 ├── app/                        # Main application package
 │   ├── api/                    # API layer
-│   │   └── v1/                 # API versioning to ensure backward compatibility
-│   │       ├── dependencies/   # Reusable FastAPI dependencies (Auth, DB session, etc.)
-│   │       └── endpoints/      # Route handlers (Controllers) organized by resource
+│   │   ├── dependencies/       # Reusable FastAPI dependencies (Auth, DB session, etc.)
+│   │   └── endpoints/          # Route handlers (Controllers) organized by resource
 │   ├── core/                   # Global configuration, security settings, and constants
 │   ├── crud/                   # CRUD (Create, Read, Update, Delete) object abstractions
 │   ├── db/                     # Database connection logic and async session management

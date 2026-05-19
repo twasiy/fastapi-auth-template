@@ -2,12 +2,12 @@ from unittest.mock import AsyncMock, patch
 
 from app.core.security import (
     create_access_token,
-    create_refresh_token,
-    create_password_reset_token,
     create_email_verification_token,
+    create_password_reset_token,
+    create_refresh_token,
 )
 
-BASE = "/api/v1/auth"
+BASE = "/api/auth"
 
 
 # ── /login ─────────────────────────────────────────────────────────────────────
@@ -218,7 +218,7 @@ class TestChangePassword:
 
 class TestForgotPassword:
     async def test_sends_reset_email(self, async_client, auth_headers):
-        with patch("app.api.v1.endpoints.auth.send_email", new_callable=AsyncMock):
+        with patch("app.api.endpoints.auth.send_email", new_callable=AsyncMock):
             resp = await async_client.post(
                 f"{BASE}/forgot-password", headers=auth_headers
             )
@@ -309,7 +309,7 @@ class TestResetPassword:
 
 class TestVerifyEmailRequest:
     async def test_sends_verification_email(self, async_client, auth_headers):
-        with patch("app.api.v1.endpoints.auth.send_email", new_callable=AsyncMock):
+        with patch("app.api.endpoints.auth.send_email", new_callable=AsyncMock):
             resp = await async_client.post(
                 f"{BASE}/verify-email-request", headers=auth_headers
             )
@@ -354,7 +354,7 @@ class TestVerifyEmail:
 
 class TestVerifyPhoneRequest:
     async def test_sends_otp(self, async_client, auth_headers):
-        with patch("app.api.v1.endpoints.auth.send_sms", return_value="MSG_SID"):
+        with patch("app.api.endpoints.auth.send_sms", return_value="MSG_SID"):
             resp = await async_client.post(
                 f"{BASE}/verify-phone-request", headers=auth_headers
             )

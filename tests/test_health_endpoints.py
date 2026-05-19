@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-BASE = "/api/v1/health"
+BASE = "/api/health"
 
 
 class TestPing:
@@ -37,7 +37,7 @@ class TestFullStatus:
 
     async def test_db_failure_returns_503(self, async_client):
         with patch(
-            "app.api.v1.endpoints.health.text",
+            "app.api.endpoints.health.text",
             side_effect=Exception("DB is down"),
         ):
             resp = await async_client.get(f"{BASE}/status")

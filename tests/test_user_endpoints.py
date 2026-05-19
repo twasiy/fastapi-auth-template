@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from app.core.security import create_email_change_token
 
-BASE = "/api/v1/users"
+BASE = "/api/users"
 
 
 # ── /register ─────────────────────────────────────────────────────────────────
@@ -23,7 +23,7 @@ class TestRegister:
         return data
 
     async def test_successful_registration(self, async_client):
-        with patch("app.api.v1.endpoints.users.send_email", new_callable=AsyncMock):
+        with patch("app.api.endpoints.users.send_email", new_callable=AsyncMock):
             resp = await async_client.post(f"{BASE}/register", json=self._payload())
         assert resp.status_code == 201
         assert "Registration successful" in resp.json()["detail"]
@@ -35,7 +35,7 @@ class TestRegister:
             email=active_verified_user.email,
             phone="+8801766666666",
         )
-        with patch("app.api.v1.endpoints.users.send_email", new_callable=AsyncMock):
+        with patch("app.api.endpoints.users.send_email", new_callable=AsyncMock):
             resp = await async_client.post(f"{BASE}/register", json=payload)
         assert resp.status_code == 400
 
@@ -61,7 +61,7 @@ class TestRegister:
 
     async def test_email_verification_is_sent_in_background(self, async_client):
         with patch(
-            "app.api.v1.endpoints.users.send_email", new_callable=AsyncMock
+            "app.api.endpoints.users.send_email", new_callable=AsyncMock
         ) as mock_send:
             resp = await async_client.post(f"{BASE}/register", json=self._payload())
         assert resp.status_code == 201
@@ -169,7 +169,7 @@ class TestUpdateProfile:
 
 class TestEmailChangeRequest:
     async def test_sends_change_email(self, async_client, auth_headers):
-        with patch("app.api.v1.endpoints.users.send_email", new_callable=AsyncMock):
+        with patch("app.api.endpoints.users.send_email", new_callable=AsyncMock):
             resp = await async_client.post(
                 f"{BASE}/me/email-change-request", headers=auth_headers
             )
@@ -236,7 +236,7 @@ class TestConfirmEmailChange:
 
 class TestPhoneChangeRequest:
     async def test_sends_otp(self, async_client, auth_headers):
-        with patch("app.api.v1.endpoints.users.send_sms", return_value="SID"):
+        with patch("app.api.endpoints.users.send_sms", return_value="SID"):
             resp = await async_client.post(
                 f"{BASE}/me/phone-change-request", headers=auth_headers
             )

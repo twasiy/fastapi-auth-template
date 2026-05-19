@@ -1,13 +1,13 @@
-import pytest
-import pytest_asyncio
+import os
 from unittest.mock import MagicMock, patch
 from uuid import uuid4
-import os
 
-from httpx import AsyncClient, ASGITransport
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-from sqlalchemy.pool import StaticPool
 import fakeredis.aioredis as fakeredis_async
+import pytest
+import pytest_asyncio
+from httpx import ASGITransport, AsyncClient
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.pool import StaticPool
 
 # 1. Environment and Mock Setup
 os.environ.update(
@@ -25,22 +25,22 @@ os.environ.update(
     }
 )
 
-from app.models.base import Base
-from app.models import User
-from app.utils import hash_password
-from app.core import create_access_token
-
 # Mock settings globally
 from pydantic import SecretStr
+
+from app.core import create_access_token
+from app.models import User
+from app.models.base import Base
+from app.utils import hash_password
 
 mock_settings = MagicMock()
 mock_settings.SECRET_KEY = SecretStr("super-secret-test-key-that-is-long-enough")
 mock_settings.ALGORITHM = "HS256"
 mock_settings.ACCESS_TOKEN_EXPIRE_MINUTES = 15
 mock_settings.REFRESH_TOKEN_EXPIRE_DAYS = 7
-mock_settings.API_V1_STR = "/api/v1"
+mock_settings.API_STR = "/api"
 
-# 2. Database Fixtures (The Fix)
+# 2. Database Fixtures
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
 
@@ -109,7 +109,7 @@ def app():
 
 @pytest_asyncio.fixture
 async def async_client(app, db_session, redis_service):
-    from app.api.v1.dependencies.database import get_async_db, get_redis_service
+    from app.api.dependencies.database import get_async_db, get_redis_service
 
     app.dependency_overrides[get_async_db] = lambda: db_session
     app.dependency_overrides[get_redis_service] = lambda: redis_service
@@ -136,7 +136,9 @@ async def active_verified_user(db_session) -> User:
         is_email_verified=True,
     )
     db_session.add(user)
-    await db_session.flush()  # Use flush instead of commit inside tests to keep trans alive
+    await (
+        db_session.flush()
+    )  # Use flush instead of commit inside tests to keep trans alive
     return user
 
 
